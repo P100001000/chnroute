@@ -1,0 +1,56 @@
+name: Update Routing Rules
+
+on:
+  schedule:
+    - cron: '37 4 * * *'  # Daily at 04:37 UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate IP CHNROUTE
+        run: |
+          set -euo pipefail
+          {
+            wget --show-progress --no-check-certificate -qO- "https://ftp.iana.org/pub/mirror/rirstats/apnic/delegated-apnic-extended-latest" \
+              | grep "apnic|CN|ipv4|" | awk -F'|' '{print $4"/"32-log($5)/log(2)}'
+            wget --show-progress --no-check-certificate -qO- "https://ftp.lacnic.net/pub/stats/apnic/delegated-apnic-extended-latest" \
+              | grep "apnic|CN|ipv4|" | awk -F'|' '{print $4"/"32-log($5)/log(2)}'
+            wget --show-progress --no-check-certificate -qO- "https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt"
+            wget --show-progress --no-check-certificate -qO- "https://ispip.clang.cn/all_cn.txt"
+          } | python3 scripts/ip_cidr_dedupe.py \
+            | tee IPchnroute \
+            | sha256sum | awk '{print $1}' > IPchnroute.sha256sum
+
+      - name: Generate RouterOS rules
+        run: |
+          chmod +x scripts/ros-dpbr.sh
+          ./scripts/ros-dpbr.sh
+
+      - name: Generate Domain lists
+        run: |
+          chmod +x scripts/mosdns
+          chmod +x scripts/Domains_chnlist.sh
+          ./scripts/Domains_chnlist.sh
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "Changes detected, committing..."
+            git add -A
+            git commit -m "Update routing rules $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            git push
+          else
+            echo "No changes to commit."
+          fi
