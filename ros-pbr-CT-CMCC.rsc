@@ -1289,6 +1289,7 @@ add dst-address=122.248.48.0/21 action=lookup table=CT
 add dst-address=122.248.56.0/22 action=lookup table=CT
 add dst-address=122.255.64.0/21 action=lookup table=CT
 add dst-address=123.49.192.0/23 action=lookup table=CT
+add dst-address=123.49.245.0/24 action=lookup table=CT
 add dst-address=123.50.160.0/19 action=lookup table=CT
 add dst-address=123.52.0.0/14 action=lookup table=CT
 add dst-address=123.58.0.0/19 action=lookup table=CT
@@ -1523,7 +1524,7 @@ add dst-address=183.84.0.0/15 action=lookup table=CT
 add dst-address=183.91.37.0/24 action=lookup table=CT
 add dst-address=183.91.39.0/24 action=lookup table=CT
 add dst-address=183.91.40.0/21 action=lookup table=CT
-add dst-address=183.91.48.0/21 action=lookup table=CT
+add dst-address=183.91.49.0/24 action=lookup table=CT
 add dst-address=183.91.56.0/24 action=lookup table=CT
 add dst-address=183.91.61.0/24 action=lookup table=CT
 add dst-address=183.91.136.0/21 action=lookup table=CT
@@ -1695,7 +1696,7 @@ add dst-address=202.47.104.0/21 action=lookup table=CT
 add dst-address=202.47.126.0/24 action=lookup table=CT
 add dst-address=202.47.128.0/24 action=lookup table=CT
 add dst-address=202.47.130.0/23 action=lookup table=CT
-add dst-address=202.55.0.0/19 action=lookup table=CT
+add dst-address=202.55.27.0/24 action=lookup table=CT
 add dst-address=202.57.196.0/22 action=lookup table=CT
 add dst-address=202.57.200.0/23 action=lookup table=CT
 add dst-address=202.57.202.0/24 action=lookup table=CT
@@ -8074,6 +8075,7 @@ add dst-address=141.11.210.0/24 action=lookup table=CT
 add dst-address=141.11.219.0/24 action=lookup table=CT
 add dst-address=141.229.14.0/23 action=lookup table=CT
 add dst-address=141.229.20.0/23 action=lookup table=CT
+add dst-address=141.229.84.0/23 action=lookup table=CT
 add dst-address=142.86.0.0/16 action=lookup table=CT
 add dst-address=143.20.246.0/24 action=lookup table=CT
 add dst-address=143.64.0.0/16 action=lookup table=CT
@@ -8569,7 +8571,6 @@ add dst-address=198.23.184.0/24 action=lookup table=CT
 add dst-address=198.23.195.0/24 action=lookup table=CT
 add dst-address=198.175.100.0/22 action=lookup table=CT
 add dst-address=199.19.20.0/23 action=lookup table=CT
-add dst-address=199.19.22.0/24 action=lookup table=CT
 add dst-address=199.182.239.0/24 action=lookup table=CT
 add dst-address=199.190.46.0/24 action=lookup table=CT
 add dst-address=199.212.57.0/24 action=lookup table=CT
